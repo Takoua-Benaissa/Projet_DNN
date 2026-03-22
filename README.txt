@@ -1,20 +1,13 @@
 ================================================================================
 PROJET DEEP LEARNING II - DEEP NEURAL NETWORKS
-Institut Polytechnique de Paris
 ================================================================================
 
 PROJECT OVERVIEW
 ================================================================================
 
 This project implements Restricted Boltzmann Machines (RBM), Deep Belief Networks
-(DBN), and Deep Neural Networks (DNN) from scratch for unsupervised and supervised
-learning tasks. The implementation includes:
-
-- RBM training using Contrastive Divergence-1 (CD-1)
-- DBN pre-training with greedy layer-wise procedure
-- DNN supervised learning with backpropagation and cross-entropy loss
-- Comprehensive analysis of pre-training benefits on MNIST
-- Image generation and visualization
+(DBN), and Deep Neural Networks (DNN) from scratch for unsupervised 
+learning tasks.
 
 
 DIRECTORY STRUCTURE
@@ -66,14 +59,11 @@ MODULE DESCRIPTIONS
    - lire_alpha_digit(characters, filepath='binaryalphadigs.mat')
      Load Binary AlphaDigits for specified characters (0-9, A-Z)
      Returns: (n_samples, 320) matrix
-   
    - load_mnist(data_dir='mnist_data')
      Load MNIST dataset with binarization and one-hot encoding
      Returns: X_train, Y_train, X_test, Y_test
-   
    - _read_mnist_images(filepath)
      Read MNIST image file from idx format
-   
    - _read_mnist_labels(filepath)
      Read MNIST label file from idx format
 
@@ -166,16 +156,16 @@ METHOD 1: Using provided scripts (Recommended for cluster)
    chmod +x run_*.sh setup_env.sh
    
    # Run RBM training on Binary AlphaDigits
-   bash run_rbm.sh
+   sbatch run_rbm.sh
    
    # Run DBN training on Binary AlphaDigits
-   bash run_dbn.sh
+   sbatch run_dbn.sh
    
    # Run DNN analysis on MNIST (generates 3 figures)
-   bash run_dnn_mnist.sh
+   sbatch run_dnn_mnist.sh
    
    # Run bonus models comparison
-   bash run_bonus.sh
+   sbatch run_bonus.sh
 
 
 METHOD 2: Direct Python execution
@@ -191,20 +181,6 @@ METHOD 2: Direct Python execution
    
    # Bonus models
    python3 bonus_generative_models.py
-
-
-METHOD 3: Using SLURM on cluster (if available)
-
-   # Already created: run_RBM_alpha.slurm, run_DBN_alpha.slurm, run_DNN_MNIST.slurm
-   sbatch run_RBM_alpha.slurm
-   sbatch run_DBN_alpha.slurm
-   sbatch run_DNN_MNIST.slurm
-   
-   # Monitor jobs
-   squeue -u $(whoami)
-   
-   # Check output
-   tail -f logs/DNN_MNIST_*.out
 
 
 EXECUTION PARAMETERS (Customizable)
@@ -301,53 +277,6 @@ Analysis Observations:
   - Figure 3: Pre-training advantage more pronounced with limited training data (<10K)
 
 
-TROUBLESHOOTING
-================================================================================
-
-Issue: "No such file or directory: binaryalphadigs.mat"
-Solution: Download the file from Kaggle and place it in the project directory
-
-Issue: "No such file or directory: mnist_data/..."
-Solution: Extract MNIST files to mnist_data/ directory
-
-Issue: Memory exceeded during DNN training
-Solution: Reduce batch_size, or use fewer training samples in principal_DNN_MNIST.py
-
-Issue: Scripts too slow
-Solution: 
-  - Reduce EPOCHS in principal scripts
-  - Use smaller networks (reduce N_HIDDEN)
-  - Run on GPU-enabled node on cluster with sbatch
-
-Issue: Plots not displaying/saving
-Verify: 
-  - matplotlib backend is set to 'Agg'
-  - Output directories exist (created automatically)
-  - Write permissions to project directory
-
-
-PERFORMANCE METRICS
-================================================================================
-
-Approximate Runtime (on H100 GPU):
-
-RBM (Binary AlphaDigits, 117 samples, 100 epochs):
-  - Runtime: ~2 seconds
-  - Memory: ~500 MB
-
-DBN (Binary AlphaDigits, 117 samples, 100 epochs per layer):
-  - Runtime: ~5 seconds
-  - Memory: ~1 GB
-
-DNN MNIST (Full analysis, all 3 figures):
-  - Runtime: ~4-5 hours
-  - Memory: ~8-16 GB (depending on network size)
-
-To speed up DNN MNIST:
-  - Reduce epochs (currently 100 for RBM, 200 for backprop)
-  - Skip some configurations in principal_DNN_MNIST.py
-  - Run specific analysis only
-
 
 DEPENDENCIES
 ================================================================================
@@ -364,29 +293,6 @@ Optional (for bonus models):
 
 Python:
   - python3.8 or higher
-
-
-PROJECT SPECIFICATIONS
-================================================================================
-
-This project implements the Deep Learning II course requirements:
-- Correct mathematical implementation of RBM (CD-1)
-- Proper DBN greedy layer-wise pre-training
-- Full backpropagation with cross-entropy loss
-- Comprehensive analysis comparing pre-trained vs random initialization
-- Clean, modular, well-documented code
-- Reproducibility with fixed random seeds
-
-Grade Criteria Met:
-✓ Correct RBM implementation with CD-1
-✓ Correct DBN with greedy layer-wise pre-training
-✓ Correct DNN with backpropagation
-✓ MNIST analysis with 3 required figures
-✓ Binary AlphaDigits visualization
-✓ Clear pre-training benefit demonstration
-✓ Professional code structure and documentation
-✓ Reproducible results
-
 
 CONTACT & SUPPORT
 ================================================================================
